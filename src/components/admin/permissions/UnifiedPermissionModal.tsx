@@ -40,9 +40,17 @@ import {
   EyeOff,
   FileText,
   Clock,
+  Loader2,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useSession } from 'next-auth/react'
+import { toast } from 'sonner'
+import { globalEventEmitter } from '@/lib/event-emitter'
+import { AuditLoggingService, AuditActionType, AuditSeverity } from '@/services/audit-logging.service'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 import PermissionTemplatesTab, { PermissionTemplate } from './PermissionTemplatesTab'
 import SmartSuggestionsPanel from './SmartSuggestionsPanel'
 import ImpactPreviewPanel from './ImpactPreviewPanel'

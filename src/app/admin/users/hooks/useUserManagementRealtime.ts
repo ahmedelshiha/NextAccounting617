@@ -3,7 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import { useUserDataContext } from '../contexts/UserDataContext'
 
-interface RealtimeOptions {
+export interface RealtimeOptions {
   debounceMs?: number
   autoRefresh?: boolean
 }

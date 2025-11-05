@@ -8,7 +8,6 @@ import { useWorkstationContext } from '../../contexts/WorkstationContext'
 import { useDashboardMetrics } from '../../hooks'
 import { WorkstationLayout } from './WorkstationLayout'
 import { WorkstationSidebar } from './WorkstationSidebar'
-import { WorkstationMainContent } from './WorkstationMainContent'
 import { WorkstationInsightsPanel } from './WorkstationInsightsPanel'
 import type { UserFilters } from '../AdvancedUserFilters'
 import { UsersTable } from '../UsersTable'
@@ -16,7 +15,6 @@ import { QuickActionsBar } from '../QuickActionsBar'
 import { OperationsOverviewCards } from '../OperationsOverviewCards'
 import { UserProfileDialog } from '../UserProfileDialog'
 import { toast } from 'sonner'
-import type { WorkstationMainContentProps } from '../../types/workstation'
 
 interface WorkstationIntegratedProps {
   users: UserItem[]

@@ -62,13 +62,19 @@ export function WorkstationIntegrated({
       const params = new URLSearchParams(window.location.search)
       return {
         search: params.get('search') || '',
-        role: (params.get('role') as any) || undefined,
-        status: (params.get('status') as any) || undefined,
-        department: (params.get('department') as any) || undefined,
-        dateRange: (params.get('dateRange') as any) || 'all',
+        role: params.get('role') || '',
+        status: params.get('status') || '',
+        department: params.get('department') || '',
+        dateRange: (params.get('dateRange') as 'all' | 'today' | 'week' | 'month') || 'all',
       }
     }
-    return {}
+    return {
+      search: '',
+      role: '',
+      status: '',
+      department: '',
+      dateRange: 'all',
+    }
   })
 
   // Update workstation context filters when local filters change

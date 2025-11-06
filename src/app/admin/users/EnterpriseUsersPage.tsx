@@ -77,7 +77,7 @@ export function EnterpriseUsersPage() {
       tab: activeTab,
       users: Array.isArray(context.users) ? context.users.length : 0,
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [activeTab, context.users?.length])
 
   // Handler for Add User action

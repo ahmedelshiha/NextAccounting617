@@ -30,7 +30,7 @@ import '../styles/admin-users-layout.css'
  * │              │   │  UsersTable      │    │
  * │              │   │  (virtualized)   │    │
  * │              │   └──────────────────┘    │
- * ├──────────────┴──────────���─────────────────┤
+ * ├──────────────┴──────────���───────��─────────┤
  * │  Sticky Footer: BulkActionsPanel (if sel) │
  * └────────────────���────────────────────────────┘
  * 
@@ -51,36 +51,6 @@ export default function AdminUsersLayout() {
 
   const handleClearSelection = () => {
     setSelectedUserIds(new Set())
-  }
-
-  const handleAddUser = () => {
-    console.log('Add User clicked')
-    // TODO: Implement add user functionality (open modal or navigate)
-    toast.info('Add User feature coming soon')
-  }
-
-  const handleImport = () => {
-    console.log('Import clicked')
-    setShowImportWizard(true)
-  }
-
-  const handleExport = async () => {
-    console.log('Export clicked')
-    try {
-      setIsExporting(true)
-      // TODO: Implement actual export functionality
-      toast.success('Export feature coming soon')
-    } catch (error) {
-      toast.error('Failed to export users')
-      console.error('Export error:', error)
-    } finally {
-      setIsExporting(false)
-    }
-  }
-
-  const handleRefresh = () => {
-    console.log('Refresh clicked')
-    window.location.reload()
   }
 
   const handleImportComplete = (results: any) => {

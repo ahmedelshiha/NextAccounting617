@@ -47,7 +47,7 @@ export const PermissionsTab = memo(function PermissionsTab({ user }: Permissions
 
   // Get available permissions for the selected role
   const availablePermissions = useMemo(() => {
-    return PERMISSIONS || []
+    return Object.values(PERMISSIONS || {})
   }, [])
 
   const handleRoleChange = useCallback((newRole: string) => {

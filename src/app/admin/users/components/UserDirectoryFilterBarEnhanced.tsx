@@ -11,10 +11,14 @@ import { ExportButton } from './ExportButton'
 import { SearchSuggestionsDropdown } from './SearchSuggestionsDropdown'
 import { FilterPresetsMenu } from './FilterPresetsMenu'
 import { QuickFilterButtons, createDefaultQuickFilters } from './QuickFilterButtons'
+import { AdvancedQueryBuilder } from './AdvancedQueryBuilder'
+import { QueryTemplateManager } from './QueryTemplateManager'
 import { useSearchSuggestions } from '../hooks/useSearchSuggestions'
 import { useFilterPresets } from '../hooks/useFilterPresets'
+import { useQueryBuilder } from '../hooks/useQueryBuilder'
 import { FilterState } from '../hooks/useFilterState'
 import { UserItem } from '../contexts/UserDataContext'
+import { FilterGroup, FilterCondition } from '../types/query-builder'
 
 export interface UserDirectoryFilterBarEnhancedProps {
   filters: FilterState

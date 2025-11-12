@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -36,6 +37,7 @@ export default function SetupWizard({
   onOpenChange,
   onComplete,
 }: SetupWizardProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"existing" | "new" | "individual">("existing");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,9 +52,15 @@ export default function SetupWizard({
   }, []);
 
   const handleSetupComplete = useCallback((entityId: string) => {
-    onComplete?.(entityId);
+    // Close the wizard dialog
     onOpenChange(false);
-  }, [onComplete, onOpenChange]);
+
+    // Call completion callback if provided
+    onComplete?.(entityId);
+
+    // Redirect to verification status page
+    router.push(`/portal/setup/status/${entityId}`);
+  }, [onComplete, onOpenChange, router]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

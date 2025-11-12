@@ -6,6 +6,7 @@ import { logger } from "@/lib/logger";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 import crypto from "crypto";
+import { initializeVerificationJob, enqueueVerificationJob } from "@/lib/jobs/entity-setup";
 
 // Validation schema for setup wizard
 const setupWizardSchema = z.object({
@@ -117,6 +118,15 @@ const _api_POST = async (request: NextRequest) => {
       });
     }
 
+    // Initialize verification job and enqueue it
+    try {
+      await initializeVerificationJob(entity.id);
+      await enqueueVerificationJob(entity.id);
+    } catch (error) {
+      logger.error("Failed to enqueue verification job", { entityId: entity.id, error });
+      // Don't fail the setup - verification can be retried
+    }
+
     // Emit audit event
     await prisma.auditEvent.create({
       data: {
@@ -132,7 +142,7 @@ const _api_POST = async (request: NextRequest) => {
       },
     });
 
-    logger.info("Entity setup initiated", {
+    logger.info("Entity setup initiated and verification queued", {
       entityId: entity.id,
       country: input.country,
       tab: input.tab,

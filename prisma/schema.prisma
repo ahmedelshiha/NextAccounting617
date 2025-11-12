@@ -1853,6 +1853,79 @@ model WorkflowHistory {
   @@map("workflow_history")
 }
 
+model SupportTicket {
+  id                    String                    @id @default(cuid())
+  tenantId              String
+  userId                String
+  assignedToId          String?
+  title                 String
+  description           String?
+  category              String                    @default("GENERAL")
+  priority              String                    @default("MEDIUM")
+  status                String                    @default("OPEN")
+  resolution            String?
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+  resolvedAt            DateTime?
+  dueAt                 DateTime?
+  slaFirstResponseAt    DateTime?
+  slaResolutionAt       DateTime?
+  attachmentIds         String[]
+  tags                  String[]
+  metadata              Json?
+
+  tenant                Tenant                    @relation("SupportTickets", fields: [tenantId], references: [id], onDelete: Cascade)
+  user                  User                      @relation("SupportTicketsCreated", fields: [userId], references: [id], onDelete: Cascade)
+  assignedTo            User?                     @relation("SupportTicketsAssigned", fields: [assignedToId], references: [id], onDelete: SetNull)
+  comments              SupportTicketComment[]
+  statusHistory         SupportTicketStatusHistory[]
+
+  @@index([tenantId])
+  @@index([userId])
+  @@index([assignedToId])
+  @@index([status])
+  @@index([priority])
+  @@index([category])
+  @@index([createdAt])
+  @@index([dueAt])
+  @@map("support_tickets")
+}
+
+model SupportTicketComment {
+  id                    String                    @id @default(cuid())
+  ticketId              String
+  authorId              String
+  content               String
+  attachmentIds         String[]
+  isInternal            Boolean                   @default(false)
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+
+  ticket                SupportTicket             @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author                User                      @relation("SupportTicketComments", fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId])
+  @@index([authorId])
+  @@index([createdAt])
+  @@map("support_ticket_comments")
+}
+
+model SupportTicketStatusHistory {
+  id                    String                    @id @default(cuid())
+  ticketId              String
+  previousStatus        String?
+  newStatus             String
+  changedBy             String?
+  reason                String?
+  changedAt             DateTime                  @default(now())
+
+  ticket                SupportTicket             @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId])
+  @@index([changedAt])
+  @@map("support_ticket_status_history")
+}
+
 enum TaskPriority {
   LOW
   MEDIUM

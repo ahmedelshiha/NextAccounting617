@@ -410,7 +410,7 @@ Epic: MSG-4 Cases & chat
 Epic: BILL-5 Billing & reconciliation
 
 **Fully Implemented** ✅:
-- ✅ Invoicing CRUD (src/app/api/admin/invoices/route.ts)
+- ✅ Invoicing CRUD (src/app/api/admin/invoices/route.ts, src/app/api/billing/invoices/route.ts)
 - ✅ Stripe checkout integration (src/app/api/payments/checkout/route.ts)
 - ✅ Stripe webhook handler with idempotency (src/app/api/payments/webhook/route.ts)
 - ✅ Payment reconciliation cron (src/lib/cron/payments.ts)
@@ -418,20 +418,21 @@ Epic: BILL-5 Billing & reconciliation
 - ✅ Admin payments UI (src/app/admin/payments/page.tsx)
 - ✅ Portal billing UI (src/components/portal/AccountCenter/BillingSection.tsx)
 - ✅ Invoice export (CSV)
-- ✅ **NEW**: Payment method vaulting (saved payment instruments) (NEW)
+- ✅ Payment method vaulting (saved payment instruments)
   - UserPaymentMethod model for storing Stripe payment methods
   - Support for cards, bank accounts, digital wallets
   - Default payment method selection
   - Fingerprint-based deduplication
-  - Automatic payment method cleanup on deletion
-  - 4 API endpoints for CRUD operations
-- ✅ **NEW**: Advanced dunning automation (retry sequences, aging) (NEW)
+  - 4 API endpoints: GET/POST /api/payments/methods, PATCH/DELETE /api/payments/methods/[id]
+  - Wallet management UI (WalletSection.tsx)
+- ✅ Advanced dunning automation (retry sequences, aging)
+  - src/lib/payments/dunning.ts (360 lines)
   - Configurable retry sequences (e.g., 1, 3, 7 days)
-  - Automatic payment retry on configured schedule
+  - Automatic payment retry via processDunning() service
   - Invoice escalation for chronically unpaid amounts
   - Invoice aging bucket analysis (30/60/90+)
   - Multi-channel notification support
-  - Cron job processor (every 6 hours)
+  - Cron job processor (netlify/functions/cron-dunning.ts) - every 6 hours
   - Graceful error handling with fallbacks
 - ✅ PCI compliance support (tokens via Stripe)
 - ✅ Government payment reference capture (invoice metadata)
@@ -525,7 +526,7 @@ Epic: TEAM-10 Collaboration
 **Status: ✅ COMPLETE**
 
 Epic: A11Y-11 & I18N-11
-- ✅ WCAG 2.2 AA audit service: Automated accessibility issue detection
+- �� WCAG 2.2 AA audit service: Automated accessibility issue detection
 - ✅ Contrast validation: Color contrast ratio calculations (WCAG AA/AAA)
 - ✅ RTL accessibility: Specific checks for bidirectional text support
 - ✅ Heading structure validation: Proper semantic HTML structure
@@ -571,7 +572,7 @@ Epic: SEC-14 Hardening
 - ✅ Device fingerprinting: OS/browser/user agent tracking
 - ✅ Trust scoring: Algorithm for calculating device trust levels
 - ✅ Audit logging: Security event logging and tracking
-- �� Services: src/lib/security/step-up-auth.ts with 380+ lines
+- ✅ Services: src/lib/security/step-up-auth.ts with 380+ lines
 
 ## Phase 15 — Go-Live & Stabilization
 **Status: ✅ COMPLETE**
@@ -857,7 +858,7 @@ Phase 7 — Country Workflows
 - [ ] Egypt VAT/e‑Invoice templates + withholding rules
 
 Phase 8 — E‑Invoicing
-- [ ] ZATCA Phase���2 adapter skeleton + tests
+- [ ] ZATCA Phase‑2 adapter skeleton + tests
 - [ ] ETA clearance adapter skeleton + tests
 - [ ] Key storage/rotation + signing + conformance
 

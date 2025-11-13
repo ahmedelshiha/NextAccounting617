@@ -28,8 +28,9 @@ interface UserFormProps {
 
   /**
    * Initial user data (required for edit mode, omitted for create mode)
+   * In edit mode, this may include email (read-only) even though email is not in UserEdit schema
    */
-  initialData?: Partial<UserEdit>
+  initialData?: Partial<UserEdit & { email?: string }>
 
   /**
    * Callback when form is submitted
